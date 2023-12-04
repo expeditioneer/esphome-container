@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export ESPHOME_DASHBOARD_USE_PING=true
+
+esphome_args=(
+  dashboard
+)
+
+if [[ -n ${DASHBOARD_USER} && -n ${DASHBOARD_PASSWORD} ]]; then
+  esphome_args+=(
+    --username "${DASHBOARD_USER}"
+    --password "${DASHBOARD_PASSWORD}"
+  )
+fi
+
+if [[ -f /etc/pki/esphome/server.crt && -f /etc/pki/esphome/private/server.key ]]; then
+  printf "Enable SSL for Tornado web server\n"
+  patch --quiet --strip=1 --directory=/usr/local/lib/python3.9/site-packages/esphome/ < /usr/local/src/tornado-enable-ssl.patch
+fi
+
+esphome "${esphome_args[@]}" /etc/esphome
