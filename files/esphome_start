@@ -21,4 +21,4 @@ if [[ -f /etc/pki/esphome/server.crt && -f /etc/pki/esphome/private/server.key ]
   patch --quiet --strip=1 --directory="${PYTHON_USER_SITE_PACKAGES_DIRECTORY}"/esphome/ < /usr/local/src/tornado-enable-ssl.patch
 fi
 
-esphome "${esphome_args[@]}" /etc/esphome
+~/.local/bin/esphome "${esphome_args[@]}" /etc/esphome
