@@ -1,6 +1,7 @@
 # ESPHome Container
 
 [![Docker Repository on Quay](https://quay.io/repository/expeditioneer/esphome/status "Docker Repository on Quay")](https://quay.io/repository/expeditioneer/esphome)
+[![Build and push container image](https://github.com/expeditioneer/esphome-container/actions/workflows/build-and-push-to-registry.yml/badge.svg)](https://github.com/expeditioneer/esphome-container/actions/workflows/build-and-push-to-registry.yml)
 
 Based on RedHat UBI-9 Image.
 
