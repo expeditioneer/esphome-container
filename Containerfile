@@ -11,7 +11,7 @@ COPY files/esphome_start /usr/local/bin/
 COPY files/esphome-patches/tornado-enable-ssl.patch /usr/local/src/
 
 RUN groupadd esphome --gid 1000 \
- && useradd esphome --uid 1000 --gid esphome --home-dir /etc/esphome
+ && useradd esphome --uid 1000 --gid esphome
 
 RUN mkdir --parents /etc/esphome \
  && chown --recursive esphome: /etc/esphome
