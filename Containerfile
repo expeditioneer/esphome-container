@@ -18,8 +18,8 @@ RUN mkdir --parents /etc/esphome \
 
 USER esphome
 
-RUN python3 -m pip install --user --upgrade pip \
- && python3 -m pip install --user esphome
+RUN python3 -m pip install --no-warn-script-location --user --upgrade pip \
+ && python3 -m pip install --no-warn-script-location --user esphome
 
 RUN git config --global advice.detachedHead false
 
