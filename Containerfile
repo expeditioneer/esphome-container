@@ -13,14 +13,13 @@ COPY files/esphome-patches/tornado-enable-ssl.patch /usr/local/src/
 RUN groupadd esphome --gid 1000 \
  && useradd esphome --uid 1000 --gid esphome --home-dir /etc/esphome
 
-RUN python3 -m pip install --upgrade pip \
- && python3 -m pip install esphome
-
 RUN mkdir --parents /etc/esphome \
- && chown --recursive esphome: /etc/esphome \
- && chown --recursive esphome: /usr/local/lib/python3.9/site-packages/esphome/
+ && chown --recursive esphome: /etc/esphome
 
 USER esphome
+
+RUN python3 -m pip install --user --upgrade pip \
+ && python3 -m pip install --user esphome
 
 RUN git config --global advice.detachedHead false
 

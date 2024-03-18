@@ -16,8 +16,9 @@ if [[ -n ${DASHBOARD_USER} && -n ${DASHBOARD_PASSWORD} ]]; then
 fi
 
 if [[ -f /etc/pki/esphome/server.crt && -f /etc/pki/esphome/private/server.key ]]; then
+  PYTHON_USER_SITE_PACKAGES_DIRECTORY="$(python3 -m site --user-site)"
   printf "Enable SSL for Tornado web server\n"
-  patch --quiet --strip=1 --directory=/usr/local/lib/python3.9/site-packages/esphome/ < /usr/local/src/tornado-enable-ssl.patch
+  patch --quiet --strip=1 --directory="${PYTHON_USER_SITE_PACKAGES_DIRECTORY}"/esphome/ < /usr/local/src/tornado-enable-ssl.patch
 fi
 
 esphome "${esphome_args[@]}" /etc/esphome
