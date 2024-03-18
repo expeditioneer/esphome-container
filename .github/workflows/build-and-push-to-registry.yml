@@ -28,8 +28,8 @@ jobs:
       - name: Test if SSL patch for Tornado is still applicable
         run: |
           PYTHON_USER_SITE_PACKAGES_DIRECTORY=$(python -m site --user-site)
-          python3 -m pip install --user --upgrade pip
-          python3 -m pip install --user esphome
+          python3 -m pip install --no-warn-script-location --user --upgrade pip
+          python3 -m pip install --no-warn-script-location --user esphome
           patch --strip=1 --directory=${PYTHON_USER_SITE_PACKAGES_DIRECTORY}/esphome/ < files/esphome-patches/tornado-enable-ssl.patch
 
       - name: "Build container image ${{ github.event.repository.name }}"
