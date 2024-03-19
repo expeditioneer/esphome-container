@@ -21,8 +21,8 @@
 -        app.listen(port, address)
 +        _LOGGER.info(f"Starting dashboard web server on port {port} and configuration dir {settings.config_dir} ...")
 +        ssl_ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-+        ssl_ctx.load_cert_chain(os.path.join('/etc/pki/esphome', "server.crt"),
-+                                os.path.join('/etc/pki/esphome/private', "server.key"))
++        ssl_ctx.load_cert_chain(os.path.expandvars('${HOME}/.pki/esphome/server.crt'),
++                                os.path.expandvars('${HOME}/.pki/esphome/server.key'))
 +        server = tornado.httpserver.HTTPServer(app, ssl_options=ssl_ctx)
 +        server.listen(port)
          return

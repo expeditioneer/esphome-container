@@ -3,7 +3,7 @@
 [![Docker Repository on Quay](https://quay.io/repository/expeditioneer/esphome/status "Docker Repository on Quay")](https://quay.io/repository/expeditioneer/esphome)
 [![Build and push container image](https://github.com/expeditioneer/esphome-container/actions/workflows/build-and-push-to-registry.yml/badge.svg)](https://github.com/expeditioneer/esphome-container/actions/workflows/build-and-push-to-registry.yml)
 
-Based on RedHat UBI-9 Image.
+Based on RedHat UBI-9 Python3-11 image.
 
 ## Scope
 Goal of this repository is to create a container which runs as smooth as possible on OpenShift.
@@ -22,7 +22,7 @@ Persistence for configuration files, should be mounted to _/etc/esphome_ inside 
 
 ### Secrets
 To protect internal traffic with TLS provide a secret for `server.crt` and `server.key` can be provided.
-The locations should be `/etc/pki/esphome/server.crt` and `/etc/pki/esphome/private/server.key` for the container/pod.
+The locations should be `/opt/app-root/src/.pki/esphome/server.crt` and `/opt/app-root/src/.pki/esphome/server.key` for the container/pod.
 
 #### Example configuration
 ```yaml
@@ -33,7 +33,7 @@ spec:
         - name: esphome
           volumeMounts:
             - name: esphome-tls
-              mountPath: /etc/pki/esphome/
+              mountPath: /opt/app-root/src/.pki/esphome
       volumes:
         - name: esphome-tls
           secret:
@@ -43,9 +43,8 @@ spec:
               - key: tls.crt
                 path: server.crt
               - key: tls.key
-                path: private/server.key
+                path: server.key
 ```
 
 ### Repetitive Logic
-Should be run as cron job with attached persistent storage for `/etc/esphome`
-`pio system prune --force`
+Cleanup should be run as a cron job with attached persistent storage for `/etc/esphome` with `pio system prune --force`.
