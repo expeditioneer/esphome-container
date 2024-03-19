@@ -1,30 +1,22 @@
-FROM registry.access.redhat.com/ubi9/ubi
-
-RUN dnf install --assumeyes git patch python3-pip \
-  && dnf clean all \
-  && rm --recursive --force /var/cache/yum
+FROM registry.access.redhat.com/ubi9/python-311
 
 ENV DASHBOARD_USER=""
 ENV DASHBOARD_PASSWORD=""
 
-COPY files/esphome_start /usr/local/bin/
-COPY files/esphome-patches/tornado-enable-ssl.patch /usr/local/src/
+RUN mkdir --parents \
+    "${APP_ROOT}"/etc/esphome \
+    "${HOME}"/.pki/esphome
 
-RUN groupadd esphome --gid 1000 \
- && useradd esphome --uid 1000 --gid esphome
+COPY files/esphome_start "${APP_ROOT}"/bin/
+COPY files/esphome-patches/tornado-enable-ssl.patch "${APP_ROOT}"/src/
 
-RUN mkdir --parents /etc/esphome \
- && chown --recursive esphome: /etc/esphome
-
-USER esphome
-
-RUN python3 -m pip install --no-warn-script-location --user --upgrade pip \
- && python3 -m pip install --no-warn-script-location --user esphome
+RUN python3 -m pip install --upgrade pip \
+ && python3 -m pip install esphome
 
 RUN git config --global advice.detachedHead false
 
 EXPOSE 6052
 
-VOLUME ["/etc/esphome"]
+VOLUME ["${APP_ROOT}/etc/esphome"]
 
 CMD ["esphome_start"]
