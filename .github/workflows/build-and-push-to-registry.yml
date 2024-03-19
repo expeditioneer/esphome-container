@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    name: "Build and push container image for ${{ github.event.repository.name }}"
+    name: "Build and push container image for ${{ env.IMAGE_NAME }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
           python3 -m pip install --no-warn-script-location --user esphome
           patch --strip=1 --directory=${PYTHON_USER_SITE_PACKAGES_DIRECTORY}/esphome/ < files/esphome-patches/tornado-enable-ssl.patch
 
-      - name: "Build container image ${{ github.event.repository.name }}"
+      - name: "Build container image ${{ env.IMAGE_NAME }}"
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
@@ -41,7 +41,7 @@ jobs:
           containerfiles: |
             ./Containerfile
 
-      - name: "Push container image ${{ github.event.repository.name }} to quay.io"
+      - name: "Push container image ${{ env.IMAGE_NAME }} to quay.io"
         id: push-to-quay
         uses: redhat-actions/push-to-registry@v2
         with:
@@ -51,5 +51,5 @@ jobs:
           username: ${{ env.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: "Print URL for ${{ github.event.repository.name }} container image"
+      - name: "Print URL for ${{ env.IMAGE_NAME }} container image"
         run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
