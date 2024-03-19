@@ -17,11 +17,11 @@ This container enables pass-through TLS termination to protect also internal tra
 If not set the dashboard will be accessible without any protection. 
 
 ### Volumes
-Persistence for configuration files, should be mounted to _/etc/esphome_ inside the container.
+Persistence for configuration files, should be mounted to _/opt/app-root/etc/esphome_ inside the container.
 
 ### Secrets
-To protect internal traffic with TLS provide a secret for `server.crt` and `server.key` can be provided.
-The locations should be `/opt/app-root/src/.pki/esphome/server.crt` and `/opt/app-root/src/.pki/esphome/server.key` for the container/pod.
+To protect internal traffic with TLS provide a secret for _server.crt_ and _server.key_ can be provided.
+The locations should be _/opt/app-root/src/.pki/esphome/server.crt_ and _/opt/app-root/src/.pki/esphome/server.key_ for the container/pod.
 
 #### Example configuration
 ```yaml
@@ -46,4 +46,4 @@ spec:
 ```
 
 ### Repetitive Logic
-Cleanup should be run as a cron job with attached persistent storage for `/etc/esphome` with `pio system prune --force`.
+Cleanup should be run as a cron job with attached persistent storage for _/opt/app-root/etc/esphome_ with `pio system prune --force`.
