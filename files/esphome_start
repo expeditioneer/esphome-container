@@ -15,7 +15,7 @@ if [[ -n ${DASHBOARD_USER} && -n ${DASHBOARD_PASSWORD} ]]; then
   )
 fi
 
-if [[ -f /etc/pki/esphome/server.crt && -f /etc/pki/esphome/private/server.key ]]; then
+if [[ -f ${HOME}/.pki/esphome/server.crt && -f ${HOME}/.pki/esphome/server.key ]]; then
   PYTHON_USER_SITE_PACKAGES_DIRECTORY="$(python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
   printf "Enable SSL for Tornado web server\n"
   patch --quiet --strip=1 \
