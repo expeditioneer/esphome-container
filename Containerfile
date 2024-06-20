@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/python-311
+FROM registry.access.redhat.com/ubi9/python-312
 
 ENV DASHBOARD_USER=""
 ENV DASHBOARD_PASSWORD=""
