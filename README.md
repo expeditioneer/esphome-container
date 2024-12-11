@@ -1,3 +1,5 @@
+# No longer maintained, I switched to Home Assistant Operating System
+
 # ESPHome Container
 
 [![Build and push container image](https://github.com/expeditioneer/esphome-container/actions/workflows/build-and-push-to-registry.yml/badge.svg)](https://github.com/expeditioneer/esphome-container/actions/workflows/build-and-push-to-registry.yml)
